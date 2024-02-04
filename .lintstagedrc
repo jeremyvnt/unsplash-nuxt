@@ -1,0 +1,4 @@
+{
+  "**/*.{ts,vue,js,html,md,css,json}": "prettier --write",
+  "yarn.lock": "yarn-deduplicate"
+}
