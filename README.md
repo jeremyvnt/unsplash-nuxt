@@ -14,7 +14,7 @@ This applications contains 4 pages:
 
 - [x] Init static quality configuration (eslint, prettier, git hooks)
 - [x] Install and configure Vuetify
-- [ ] Create pages & manage routing
+- [x] Create pages & manage routing
 - [ ] Implement main layout and manage redirections to the different pages
 - [ ] Implement feed page with mocked data
 - [ ] Manage HTTP service to request the Unsplash API
