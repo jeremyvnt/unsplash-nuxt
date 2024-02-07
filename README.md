@@ -16,7 +16,7 @@ This applications contains 4 pages:
 - [x] Install and configure Vuetify
 - [x] Create pages & manage routing
 - [x] Implement main layout and manage redirections to the different pages
-- [ ] Implement home page with mocked data
+- [x] Implement home page with mocked data
 - [ ] Manage HTTP service to request the Unsplash API
 - [ ] Replace mocked data with data from the API on home page.
 - [ ] Implement topic page
@@ -27,7 +27,7 @@ This applications contains 4 pages:
 - [ ] Manage i18n
 - [ ] Manage user authentication
 - [ ] Implement authenticated user profile page
-- [ ] Implement post photo feature
+- [ ] Implement upload photo feature
 - [ ] Implement collections features
 
 ## Setup

@@ -1,11 +1,7 @@
-<script setup lang="ts">
-const route = useRoute();
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div>
-    <h1>Index</h1>
-    <p>Current route: {{ route.path }}</p>
-    <PhotosGallery />
+  <div class="ma-4">
+    <TrendyPhotoGallery />
   </div>
 </template>
