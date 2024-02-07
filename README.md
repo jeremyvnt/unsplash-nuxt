@@ -1,7 +1,34 @@
-# Nuxt 3 Minimal Starter
+# Unsplash-nuxt
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn
-more.
+Nuxt POC using Unsplash API.
+
+This applications contains 4 pages:
+
+- Home page (/): displays the top trending photos
+- Topic page (/topics/:topicId): displays photos related to the selected topic
+- Search page (/search): based on search result, this page displays:
+  - associated photos (/search/photos/:result)
+- Photo details page (/photos/:slug): displays single photo with it data
+
+## Todo list
+
+- [x] Init static quality configuration (eslint, prettier, git hooks)
+- [x] Install and configure Vuetify
+- [ ] Create pages & manage routing
+- [ ] Implement main layout and manage redirections to the different pages
+- [ ] Implement feed page with mocked data
+- [ ] Manage HTTP service to request the Unsplash API
+- [ ] Replace mocked data with data from the API on home page.
+- [ ] Implement topic page
+- [ ] Implement search page
+
+### Improvements
+
+- [ ] Manage i18n
+- [ ] Manage user authentication
+- [ ] Implement authenticated user profile page
+- [ ] Implement post photo feature
+- [ ] Implement collections features
 
 ## Setup
 
