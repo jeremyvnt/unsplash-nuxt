@@ -2,8 +2,10 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  typescript: {
-    typeCheck: true,
+  runtimeConfig: {
+    public: {
+      unsplashAccessKey: process.env.UNSPLASH_ACCESS_KEY || undefined,
+    },
   },
   plugins: ['~/plugins/vuetify'],
   build: {
