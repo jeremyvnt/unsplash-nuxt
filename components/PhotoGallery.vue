@@ -8,25 +8,39 @@ export default defineComponent({
   props: {
     photos: Array<any>,
   },
+  methods: {
+    load({ done }: any): void {
+      this.$emit('loadMore');
+      setTimeout(() => done('ok'), 1500);
+    },
+  },
 });
 </script>
 
 <template>
   <v-container>
     <v-row no-gutters>
-      <div class="gallery">
-        <PhotoPreview
-          v-for="photo in photos"
-          :key="photo.id"
-          :imageUrl="photo.urls.regular"
-          :id="photo.id"
-          :firstName="photo?.user?.first_name"
-          :lastName="photo?.user?.last_name || ''"
-          :userId="photo?.user?.id"
-          :userPicture="photo?.user?.profile_image?.small"
-          :isAvailableHiring="photo?.user?.for_hire"
-        />
-      </div>
+      <v-infinite-scroll
+        min-height="1000px"
+        height="100%"
+        :items="photos"
+        mode="intersect"
+        @load="load"
+      >
+        <div class="gallery">
+          <PhotoPreview
+            v-for="photo in photos"
+            :key="photo?.id"
+            :imageUrl="photo?.urls?.regular"
+            :id="photo?.id"
+            :firstName="photo?.user?.first_name"
+            :lastName="photo?.user?.last_name || ''"
+            :userId="photo?.user?.id"
+            :userPicture="photo?.user?.profile_image?.small"
+            :isAvailableHiring="photo?.user?.for_hire"
+          />
+        </div>
+      </v-infinite-scroll>
     </v-row>
   </v-container>
 </template>
