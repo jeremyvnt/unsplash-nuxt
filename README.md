@@ -21,7 +21,8 @@ This applications contains 4 pages:
 - [x] Replace mocked data with data from the API on topic list.
 - [x] Replace mocked data with data from the API on home page.
 - [x] Implement topic page
-- [ ] Implement search page
+- [x] Implement search page
+- [ ] Implement photo details page
 
 ### Improvements
 
@@ -32,6 +33,17 @@ This applications contains 4 pages:
 - [ ] Implement collections features
 
 ## Setup
+
+### Requirements
+
+Create an `.env` file in the project root and set the UNSPLASH_ACCESS_KEY variable from your
+unsplash application's access key.
+
+```
+UNSPLASH_ACCESS_KEY="unsplash-app-access-token"
+```
+
+### Basic commands
 
 Make sure to install the dependencies:
 
