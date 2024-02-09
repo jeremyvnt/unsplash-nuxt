@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import TopicList from '~/components/TopicList.vue';
 import Header from '~/components/Header.vue';
+import TopicList from '~/components/TopicList.vue';
 
 export default defineComponent({
   name: 'default',
@@ -13,8 +13,8 @@ export default defineComponent({
   <v-layout>
     <Header />
     <v-main>
+      <TopicList />
       <v-col>
-        <TopicList />
         <slot />
       </v-col>
     </v-main>

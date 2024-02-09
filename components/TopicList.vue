@@ -1,20 +1,47 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { topics } from '~/fixtures/topics';
-import type { Topic } from '~/fixtures/topics';
+import type { TopicVM } from '~/types/TopicVM';
+import { Routes } from '~/types/Routes';
 
 interface TopicListData {
-  topics: Topic[];
+  response?: any;
   selectedValue?: string;
 }
 
+const mapTopicApiResponseToTopic = (apiTopic: any): TopicVM => ({
+  id: apiTopic.slug,
+  name: apiTopic.title,
+  href: `${Routes.Topics}/${apiTopic.slug}`,
+});
+
 export default defineComponent({
   name: 'TopicList',
-  data: (): TopicListData => ({ topics, selectedValue: undefined }),
+  data: (): TopicListData => ({
+    response: undefined,
+    selectedValue: undefined,
+  }),
+  created() {
+    this.getTopics();
+  },
   computed: {
     currentRoute(): string {
-      const route = useRoute();
-      return route.path;
+      return this.$route.path;
+    },
+    topics(): TopicVM[] {
+      if (!this.response) return [];
+      return this.response.map(topic => mapTopicApiResponseToTopic(topic));
+    },
+  },
+  methods: {
+    getTopics(): void {
+      this.$unsplash.topics
+        .list({ page: 1, perPage: 20 })
+        .then((response: any) => {
+          this.response = response?.response?.results || [];
+        })
+        .catch((error: any) => {
+          console.log('Error: ', error);
+        });
     },
   },
   watch: {
@@ -28,7 +55,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <v-tabs align-tabs="start" show-arrows density="compact" v-model="selectedValue" :items="topics">
+  <v-tabs
+    align-tabs="start"
+    show-arrows
+    density="compact"
+    v-model="selectedValue"
+    :items="topics"
+    class="position-sticky"
+  >
     <v-tab
       v-for="topic in topics"
       :key="topic?.href"

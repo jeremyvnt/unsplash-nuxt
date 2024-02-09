@@ -18,7 +18,8 @@ This applications contains 4 pages:
 - [x] Implement main layout and manage redirections to the different pages
 - [x] Implement home page with mocked data
 - [x] Manage HTTP service to request the Unsplash API
-- [ ] Replace mocked data with data from the API on home page.
+- [x] Replace mocked data with data from the API on topic list.
+- [x] Replace mocked data with data from the API on home page.
 - [ ] Implement topic page
 - [ ] Implement search page
 
