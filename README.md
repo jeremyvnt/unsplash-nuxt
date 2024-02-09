@@ -20,7 +20,7 @@ This applications contains 4 pages:
 - [x] Manage HTTP service to request the Unsplash API
 - [x] Replace mocked data with data from the API on topic list.
 - [x] Replace mocked data with data from the API on home page.
-- [ ] Implement topic page
+- [x] Implement topic page
 - [ ] Implement search page
 
 ### Improvements

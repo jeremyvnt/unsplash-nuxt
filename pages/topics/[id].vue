@@ -8,9 +8,8 @@ export default defineComponent({
       const route = useRoute();
       return route.path;
     },
-    id(): string | string[] {
-      const route = useRoute();
-      return route.params.id;
+    id(): string {
+      return this.$route.params.id as string;
     },
   },
 });
@@ -18,8 +17,8 @@ export default defineComponent({
 
 <template>
   <div>
-    <h1>Topic: {{ id }}</h1>
-    <p v-if="path">Current route: {{ path }}</p>
+    <TopicHero :topicId="id" />
+    <TopicPhotoGallery :topicId="id" />
   </div>
 </template>
 
