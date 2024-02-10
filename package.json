@@ -15,7 +15,8 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
-    "@mdi/font": "^7.4.47"
+    "@mdi/font": "^7.4.47",
+    "unsplash-js": "^7.0.19"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.6.0",
