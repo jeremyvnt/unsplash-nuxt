@@ -2,6 +2,7 @@
 import { defineComponent } from 'vue';
 import SearchBar from '~/components/SearchBar.vue';
 import { Routes } from '~/types/Routes';
+import PerPageInput from '~/components/PerPageInput.vue';
 
 export default defineComponent({
   name: 'Header',
@@ -10,13 +11,13 @@ export default defineComponent({
       return Routes;
     },
   },
-  components: { SearchBar },
+  components: { PerPageInput, SearchBar },
 });
 </script>
 
 <template>
   <v-app-bar :elevation="0" class="px-8">
-    <v-row justify="space-between" align="center" class="flex-nowrap">
+    <v-row justify="space-between" align="center" class="flex-nowrap ga-2">
       <v-btn
         flat
         :ripple="false"
@@ -24,14 +25,19 @@ export default defineComponent({
         variant="text"
         :active="false"
         :to="Routes.Root"
-        class="noOverlay"
+        class="noOverlay mr-3"
       >
         <img src="/images/logo.svg" alt="unsplash" height="32" width="32" />
       </v-btn>
-      <div class="ml-3 w-50">
-        <SearchBar />
-      </div>
-      <v-row justify="end" align="center" class="flex-nowrap ga-2">
+      <v-row align="center" class="flex-nowrap ga-2">
+        <div style="min-width: 360px">
+          <SearchBar />
+        </div>
+      </v-row>
+      <v-row justify="end" align="center" class="flex-nowrap ga-2" no-gutters>
+        <div style="min-width: 200px">
+          <PerPageInput />
+        </div>
         <v-btn variant="outlined" size="small" class="text-body-2 text-grey" disabled>
           Envoyer une photo
         </v-btn>

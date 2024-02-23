@@ -1,46 +1,40 @@
-<script lang="ts">
-import PhotoGallery from '~/components/PhotoGallery.vue';
+<script setup lang="ts">
+import type { Basic } from 'unsplash-js/src/methods/photos/types';
+import type { ApiResponse } from 'unsplash-js/src/helpers/response';
 
-interface TrendyPhotoGalleryData {
-  page: number;
-  photos: any[];
-}
-export default defineNuxtComponent({
-  name: 'TrendyPhotoGallery',
-  components: { PhotoGallery },
-  data(): TrendyPhotoGalleryData {
-    return {
-      page: 1,
-      photos: [],
-    };
-  },
-  created() {
-    this.getTrendyPhotos();
-  },
-  methods: {
-    loadMore() {
-      this.page += 1;
+const route = useRoute();
+
+const defaultPerPage = 15;
+
+const perPage = computed(() => route.query['perPage'] || defaultPerPage);
+const page = ref(1);
+
+const photos = reactive(new Set([]));
+
+const { getTrendyPhotos } = useUnsplash();
+const { data } = await useLazyAsyncData(
+  `photos-trendy:page=${page}&perPage=${perPage}`,
+  () => getTrendyPhotos(page.value, perPage.value),
+  {
+    transform: (
+      response: ApiResponse<{
+        results: Basic[];
+        total: number;
+      }>,
+    ) => {
+      return response.response;
     },
-    getTrendyPhotos(): void {
-      this.$unsplash.photos
-        .list({ page: this.page, perPage: 15 })
-        .then((response: any) => {
-          const results = response?.response?.results || [];
-          this.photos = [...this.photos, ...results] as any[];
-        })
-        .catch((error: any) => {
-          console.log('Error: ', error);
-        });
-    },
+    watch: [page, perPage],
   },
-  watch: {
-    page(nextPage, previousPage) {
-      if (nextPage > previousPage) {
-        this.getTrendyPhotos();
-      }
-    },
-  },
+);
+
+watch(data, newData => {
+  (newData?.results || []).forEach(photo => photos.add(photo));
 });
+
+function loadMore(): void {
+  page.value += 1;
+}
 </script>
 
 <template>
