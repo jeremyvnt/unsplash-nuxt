@@ -5,22 +5,38 @@ interface PhotoPreviewProps {
   firstName: string;
   lastName: string;
   userPicture: string;
+  isSelected: boolean;
   isAvailableHiring?: boolean;
 }
+
+interface PhotoPreviewEmits {
+  (e: 'onClick', photoId: string): void;
+}
+
 const {
   id,
   imageUrl,
   firstName,
   lastName,
   userPicture,
+  isSelected = false,
   isAvailableHiring = false,
 } = defineProps<PhotoPreviewProps>();
 
+const emit = defineEmits<PhotoPreviewEmits>();
+
 const fullName = computed(() => `${firstName} ${lastName}`);
+
+const handleOnClick = () => emit('onClick', id);
 </script>
 
 <template>
-  <div class="photo-preview position-relative mb-6" :id="id">
+  <div
+    class="photo-preview position-relative mb-6"
+    :id="id"
+    :class="{ selected: isSelected }"
+    @click="handleOnClick"
+  >
     <v-hover>
       <img :src="imageUrl" alt="" width="100%" height="auto" class="d-block" />
       <div
@@ -68,6 +84,10 @@ const fullName = computed(() => `${firstName} ${lastName}`);
 }
 .photo-preview {
   cursor: zoom-in;
+}
+
+.selected {
+  box-shadow: rgb(111 182 14 / 70%) 0px 0px 0px 5px;
 }
 
 .photo-preview:hover .hover-content {

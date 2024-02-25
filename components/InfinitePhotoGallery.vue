@@ -9,6 +9,11 @@ interface InfinitePhotoGalleryProps {
   queryKey: string;
   perPage?: number;
   queryFn: (page: number, perPage: number) => Promise<ApiResponse<Partial<Photos>>>;
+  selectedPhoto: string;
+}
+
+interface InfinitePhotoGalleryEmits {
+  (e: 'onPhotoClick', photoId: string): void;
 }
 
 interface LoadOptions {
@@ -17,7 +22,8 @@ interface LoadOptions {
 }
 
 const route = useRoute();
-const { queryKey, queryFn, perPage } = defineProps<InfinitePhotoGalleryProps>();
+const { queryKey, queryFn, perPage, selectedPhoto } = defineProps<InfinitePhotoGalleryProps>();
+const emit = defineEmits<InfinitePhotoGalleryEmits>();
 
 const defaultPerPage = 15;
 const photos: Basic[] = reactive(new Set([]));
@@ -31,7 +37,7 @@ const { data, execute, status } = await useAsyncData(
     transform: (response: ApiResponse<Partial<Photos>>) => {
       return response.response;
     },
-    watch: [page, perPage],
+    watch: [perPage],
   },
 );
 
@@ -46,22 +52,18 @@ watch(
   },
 );
 
-async function load({ done }: LoadOptions) {
+async function nextPage({ done }: LoadOptions) {
   page.value += 1;
-  switch (status) {
-    case 'pending':
-      done('loading');
-      break;
-    case 'error':
-      done('error');
-      break;
-    case 'success':
-    default:
-      //done('ok');
-      setTimeout(() => done('ok'), 1500);
-      break;
+
+  try {
+    done('pending');
+    await execute();
+    done('ok');
+  } catch (e) {
+    done('error');
   }
 }
+const handleOnPhotoClick = id => emit('onPhotoClick', id);
 </script>
 
 <template>
@@ -72,12 +74,13 @@ async function load({ done }: LoadOptions) {
         height="100%"
         :items="photos"
         mode="intersect"
-        @load="load"
+        @load="nextPage"
       >
         <div class="gallery">
           <PhotoPreview
             v-for="photo in photos"
             :key="photo?.id"
+            :is-selected="selectedPhoto === photo?.id"
             :imageUrl="photo?.urls?.regular"
             :id="photo?.id"
             :firstName="photo?.user?.first_name"
@@ -85,6 +88,7 @@ async function load({ done }: LoadOptions) {
             :userId="photo?.user?.id"
             :userPicture="photo?.user?.profile_image?.small"
             :isAvailableHiring="photo?.user?.for_hire"
+            @on-click="handleOnPhotoClick"
           />
         </div>
       </v-infinite-scroll>
@@ -96,6 +100,8 @@ async function load({ done }: LoadOptions) {
 .gallery {
   column-count: 3;
   column-gap: 24px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 @media (max-width: 900px) {
   .gallery {
