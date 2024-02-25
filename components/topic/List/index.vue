@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { ApiResponse } from 'unsplash-js/src/helpers/response';
 import type { Basic } from 'unsplash-js/src/methods/topics/types';
-import type { TopicVM } from '~/components/TopicList/TopicVM';
-import { mapFromTopicBasic } from '~/components/TopicList/TopicVM';
+import type { TopicVM } from '~/components/topic/List/TopicVM';
+import { mapFromTopicBasic } from '~/components/topic/List/TopicVM';
 
 const route = useRoute();
 const { getTopics } = useUnsplash();

@@ -14,7 +14,7 @@ const setSelectedPhotoQueryParam = (photoId: string) => {
 
 <template>
   <div class="ma-4">
-    <InfinitePhotoGallery
+    <PhotoInfiniteGallery
       query-key="photos-trendy"
       :queryFn="getTrendyPhotos"
       @on-photo-click="setSelectedPhotoQueryParam"

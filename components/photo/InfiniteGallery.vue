@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PhotoPreview from '~/components/PhotoPreview.vue';
+import PhotoPreview from '~/components/photo/Preview.vue';
 import type { Basic } from 'unsplash-js/src/methods/photos/types';
 import type { ApiResponse } from 'unsplash-js/src/helpers/response';
 import type { Photos } from 'unsplash-js/src/methods/search/types/response';
@@ -9,7 +9,7 @@ interface InfinitePhotoGalleryProps {
   queryKey: string;
   perPage?: number;
   queryFn: (page: number, perPage: number) => Promise<ApiResponse<Partial<Photos>>>;
-  selectedPhoto: string;
+  selectedPhoto?: string;
 }
 
 interface InfinitePhotoGalleryEmits {
@@ -30,14 +30,14 @@ const photos: Basic[] = reactive(new Set([]));
 const perPageParam = computed(() => perPage || route.query['perPage'] || defaultPerPage);
 const page = ref(1);
 
-const { data, execute, status } = await useAsyncData(
+const { data, execute } = await useAsyncData(
   `${queryKey}:page=${page}&perPage=${perPage}`,
   () => queryFn(page.value, perPageParam.value),
   {
     transform: (response: ApiResponse<Partial<Photos>>) => {
       return response.response;
     },
-    watch: [perPage],
+    watch: [perPageParam],
   },
 );
 
@@ -56,7 +56,6 @@ async function nextPage({ done }: LoadOptions) {
   page.value += 1;
 
   try {
-    done('pending');
     await execute();
     done('ok');
   } catch (e) {

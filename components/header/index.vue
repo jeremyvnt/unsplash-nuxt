@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { PerPageInput, SearchBar } from '#components';
+import PerPageInput from './PerPageInput.vue';
+import SearchBar from './SearchBar.vue';
 import { Routes } from '~/types/Routes';
 </script>
 

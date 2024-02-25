@@ -10,7 +10,7 @@ const getPhotos = (page: number, perPage: number) => getTopicPhotos(id.value, pa
 <template>
   <div>
     <TopicHero :topicId="id" />
-    <InfinitePhotoGallery v-if="id" query-key="photos-topic" :queryFn="getPhotos" />
+    <PhotoInfiniteGallery v-if="id" query-key="photos-topic" :queryFn="getPhotos" />
   </div>
 </template>
 

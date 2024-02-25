@@ -11,7 +11,7 @@ const getPhotos = (page: number, perPage: number) => searchPhotos(query.value, p
     <v-container>
       <h1 v-if="query" class="my-5">{{ query }}</h1>
     </v-container>
-    <InfinitePhotoGallery v-if="query" query-key="photos-search" :queryFn="getPhotos" />
+    <PhotoInfiniteGallery v-if="query" query-key="photos-search" :queryFn="getPhotos" />
   </div>
 </template>
 
