@@ -15,6 +15,7 @@ function setPerPageQueryParam() {
   <v-text-field
     type="number"
     min="1"
+    max="30"
     v-model="perPage"
     @keydown.enter="setPerPageQueryParam"
     density="compact"

@@ -1,18 +1,6 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
-import SearchBar from '~/components/SearchBar.vue';
+<script setup lang="ts">
+import { PerPageInput, SearchBar } from '#components';
 import { Routes } from '~/types/Routes';
-import PerPageInput from '~/components/PerPageInput.vue';
-
-export default defineComponent({
-  name: 'Header',
-  computed: {
-    Routes() {
-      return Routes;
-    },
-  },
-  components: { PerPageInput, SearchBar },
-});
 </script>
 
 <template>

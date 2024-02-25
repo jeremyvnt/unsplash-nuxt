@@ -1,27 +1,26 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+interface PhotoPreviewProps {
+  id: string;
+  imageUrl: string;
+  firstName: string;
+  lastName: string;
+  userPicture: string;
+  isAvailableHiring?: boolean;
+}
+const {
+  id,
+  imageUrl,
+  firstName,
+  lastName,
+  userPicture,
+  isAvailableHiring = false,
+} = defineProps<PhotoPreviewProps>();
 
-export default defineComponent({
-  name: 'PhotoPreview',
-  props: {
-    id: String,
-    imageUrl: String,
-    firstName: String,
-    lastName: String,
-    userId: String,
-    userPicture: String,
-    isAvailableHiring: Boolean,
-  },
-  computed: {
-    fullName() {
-      return `${this.firstName} ${this.lastName}`;
-    },
-  },
-});
+const fullName = computed(() => `${firstName} ${lastName}`);
 </script>
 
 <template>
-  <div class="photo-preview position-relative mb-6">
+  <div class="photo-preview position-relative mb-6" :id="id">
     <v-hover>
       <img :src="imageUrl" alt="" width="100%" height="auto" class="d-block" />
       <div

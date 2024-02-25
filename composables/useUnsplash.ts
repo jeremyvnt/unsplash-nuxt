@@ -10,5 +10,21 @@ export const useUnsplash = () => {
     return unsplashApi.photos.list({ page, perPage });
   }
 
-  return { getTrendyPhotos };
+  function searchPhotos(query: string, page: number, perPage: number) {
+    return unsplashApi.search.getPhotos({ query, page, perPage });
+  }
+
+  function getTopic(topicIdOrSlug: string) {
+    return unsplashApi.topics.get({ topicIdOrSlug });
+  }
+
+  function getTopics(page: number, perPage: number) {
+    return unsplashApi.topics.list({ page, perPage });
+  }
+
+  function getTopicPhotos(topicIdOrSlug: string, page: number, perPage: number) {
+    return unsplashApi.topics.getPhotos({ topicIdOrSlug, page, perPage });
+  }
+
+  return { getTopic, getTopics, getTopicPhotos, getTrendyPhotos, searchPhotos };
 };

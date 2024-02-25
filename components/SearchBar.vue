@@ -1,30 +1,25 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { Routes } from '~/types/Routes';
-import type { RouteLocation } from 'vue-router';
+
+const route = useRoute();
 
 const defaultTextValue = undefined;
+const searchText = ref(defaultTextValue);
 
-export default defineComponent({
-  name: 'SearchBar',
-  data: () => ({
-    searchText: defaultTextValue,
-  }),
-  methods: {
-    redirectToSearchPage() {
-      if (this.searchText) {
-        navigateTo(`${Routes.Search_Photos}/${this.searchText}`);
-      }
-    },
+function redirectToSearchPage() {
+  if (searchText.value) {
+    navigateTo(`${Routes.Search_Photos}/${searchText.value}`);
+  }
+}
+
+watch(
+  () => route.path,
+  (to: string) => {
+    if (!to.match(Routes.Search_Photos)) {
+      searchText.value = defaultTextValue;
+    }
   },
-  watch: {
-    $route(to: RouteLocation, from: RouteLocation) {
-      if (!to.path.match(Routes.Search_Photos)) {
-        this.searchText = defaultTextValue;
-      }
-    },
-  },
-});
+);
 </script>
 
 <template>

@@ -1,41 +1,33 @@
-<script lang="ts">
-interface TopicHeroData {
-  page: number;
-  imgUrl: string;
-  title: string;
-  description: string;
+<script setup lang="ts">
+import type { ApiResponse } from 'unsplash-js/src/helpers/response';
+import type { Full } from 'unsplash-js/src/methods/topics/types';
+
+interface TopicHeroProps {
+  topicId: string;
 }
-export default defineNuxtComponent({
-  name: 'TopicHero',
-  props: {
-    topicId: String,
+
+const { getTopic } = useUnsplash();
+const { topicId } = defineProps<TopicHeroProps>();
+const imgUrl: string = ref('');
+const title: string | undefined = ref(undefined);
+const description: string | undefined = ref(undefined);
+
+const { data } = await useAsyncData(`topic:${topicId}`, () => getTopic(topicId), {
+  transform: (response: ApiResponse<Full>) => {
+    return response.response;
   },
-  data(): TopicHeroData {
-    return {
-      page: 1,
-      imgUrl: '',
-      title: '',
-      description: '',
-    };
-  },
-  created() {
-    this.getTopic();
-  },
-  methods: {
-    getTopic(): void {
-      this.$unsplash.topics
-        .get({ topicIdOrSlug: this.topicId })
-        .then((response: any) => {
-          this.title = response?.response?.title;
-          this.description = response?.response?.description;
-          this.imgUrl = response?.response?.cover_photo.urls.regular;
-        })
-        .catch((error: any) => {
-          console.log('Error: ', error);
-        });
-    },
-  },
+  watch: [topicId],
 });
+
+watch(
+  data,
+  newData => {
+    title.value = newData.title;
+    description.value = newData.description;
+    imgUrl.value = newData.cover_photo.urls.regular;
+  },
+  { immediate: true },
+);
 </script>
 
 <template>

@@ -1,14 +1,9 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+const route = useRoute();
+const query = computed(() => route.params.query);
 
-export default defineComponent({
-  name: '[query]',
-  computed: {
-    query(): string {
-      return this.$route.params.query as string;
-    },
-  },
-});
+const { searchPhotos } = useUnsplash();
+const getPhotos = (page: number, perPage: number) => searchPhotos(query.value, page, perPage);
 </script>
 
 <template>
@@ -16,7 +11,7 @@ export default defineComponent({
     <v-container>
       <h1 v-if="query" class="my-5">{{ query }}</h1>
     </v-container>
-    <SearchPhotoGallery v-if="query" :query="query" />
+    <InfinitePhotoGallery v-if="query" query-key="photos-search" :queryFn="getPhotos" />
   </div>
 </template>
 

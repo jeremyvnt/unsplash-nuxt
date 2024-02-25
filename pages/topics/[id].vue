@@ -1,24 +1,16 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+const route = useRoute();
+const { getTopicPhotos } = useUnsplash();
 
-export default defineComponent({
-  name: '[id]',
-  computed: {
-    path(): string {
-      const route = useRoute();
-      return route.path;
-    },
-    id(): string {
-      return this.$route.params.id as string;
-    },
-  },
-});
+const id = computed(() => route.params.id);
+
+const getPhotos = (page: number, perPage: number) => getTopicPhotos(id.value, page, perPage);
 </script>
 
 <template>
   <div>
     <TopicHero :topicId="id" />
-    <TopicPhotoGallery :topicId="id" />
+    <InfinitePhotoGallery v-if="id" query-key="photos-topic" :queryFn="getPhotos" />
   </div>
 </template>
 

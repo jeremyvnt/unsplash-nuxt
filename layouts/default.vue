@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from '~/components/Header.vue';
-import TopicList from '~/components/TopicList.vue';
+import TopicList from '~/components/TopicList/index.vue';
 
 export default defineComponent({
   name: 'default',

@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { getTrendyPhotos } = useUnsplash();
+</script>
 
 <template>
   <div class="ma-4">
-    <TrendyPhotoGallery />
+    <InfinitePhotoGallery query-key="photos-trendy" :queryFn="getTrendyPhotos" />
   </div>
 </template>
