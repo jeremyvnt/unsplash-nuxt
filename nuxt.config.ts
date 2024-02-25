@@ -19,6 +19,7 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }));
       });
     },
+    '@nuxt/test-utils/module',
     //...
   ],
   vite: {

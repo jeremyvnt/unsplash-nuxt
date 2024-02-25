@@ -79,6 +79,22 @@ yarn dev
 bun run dev
 ```
 
+## Testing
+
+```bash
+# npm
+npm run test
+
+# pnpm
+pnpm run test
+
+# yarn
+yarn test
+
+# bun
+bun run test
+```
+
 ## Production
 
 Build the application for production:
